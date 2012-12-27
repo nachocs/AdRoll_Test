@@ -143,7 +143,6 @@ $(function () {
 			'mouseenter .container': 'mostrarComentariosEv',
 			'mouseleave .container': 'ocultarComentariosEv',
 			'click .container': 'saltar',
-			'click .titular': 'muestraIndice',
 			'click #mostrarmas': 'mostrarMas'
 		},
 		detect_scroll: function () {
