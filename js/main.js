@@ -186,11 +186,8 @@ $(function () {
 			this.indice = indice;
 			console.log("indice", this.indice)
 
-			var ancho = $('#contenido').width();
-			$('#container').css({'overflow-y': '', 'overflow-x': ''});
-			$('#container').width(ancho);
-			$('#container').height($('#contenido').height());
-			$('#resultado').hide();
+			$('.titulares').removeClass('on');
+			$(ev.currentTarget).addClass('on')
 
 			$D.empieza = 0;
 			this.collection.fetch({ data: {indice: indice } });
