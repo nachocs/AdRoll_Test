@@ -1,0 +1,299 @@
+body{
+	background-color:white;
+}
+
+img {
+	width: auto\9;
+	height: auto;
+	max-width: 100%;
+	vertical-align: middle;
+	border: 0;
+	-ms-interpolation-mode: bicubic;
+}
+
+.contenido{
+	background-color:#05034a;
+}
+
+.container {
+	width: 100%;
+	max-width: 178px;
+	position:relative;
+	height:272px;	
+	border:0px solid black;
+	float:left;
+	margin:10px;
+	overflow:hidden;
+	font-family:Verdana, Arial, Helvetica;
+	font-size: 8pt;
+	width:178px\9;
+}
+
+.destacado{
+	width: 100%;
+	max-width: 376px!important;
+	width: 376px\9;
+}
+
+.content {
+	position: absolute;
+	color:white;
+	z-index:5;
+	background-color: darkSlateBlue;
+	opacity:.75;
+	font-weight:bold;
+	padding-top:1px;
+	top: 0px;
+	box-shadow:1px 1px 4px 0px black;
+	width:100%;
+}
+
+.content span{
+	position:relative;
+	margin:5px;
+	display:block;
+}
+
+.background {
+	position:absolute;
+	top:0px;
+	left:0px;
+	width:100%;
+	height:100%;
+	background-color:Black;
+	z-index:1;
+	background-image:url('');
+	background-size:cover;
+	-moz-background-size: cover;
+	-webkit-background-size: cover;
+	-o-background-size: cover;
+	background-position:50% 50%;
+	opacity:1;
+/*	box-shadow: 2px 1px 6px 0px black inset;*/
+}
+
+.comentarios{
+	position:absolute;
+	bottom:45px;
+	left:0px;
+	width:158px;
+	height:150px;
+	z-index:6;
+	display: none;
+	padding: 10px;
+}
+
+.comentarios span{
+	height: 150px;
+	overflow:hidden;
+	color:white;
+	background-color: darkSlateBlue;
+	opacity: .85;
+	padding-top: 4px;
+	padding-left: 8px;
+	display: block;
+	box-shadow:0px 0px 4px 1px white;
+}
+
+.destacado .comentarios {
+	width:250px;
+}
+
+.titular{
+	position:absolute;
+	bottom:0px;
+	left:0px;
+	margin:8px;
+	z-index:7;
+	color:white;
+	background-color: darkSlateBlue;
+	padding-top:2px;
+	padding-bottom:2px;
+	padding-left:10px;
+	padding-right:10px;
+	font-weight:bold;
+	cursor:pointer;
+	box-shadow:1px 1px 4px 0px black;
+}
+
+
+
+.vermas{
+	position:absolute;
+	top:155px;
+	left:60px;
+	color:darkSlateBlue;
+	background-color:whiteSmoke;
+	z-index:7;
+	padding-top:4px;
+	padding-bottom:4px;
+	padding-left:8px;
+	padding-right:8px;
+	border:1px solid darkSlateBlue;
+	box-shadow: 0px 4px 21px -3px darkSlateBlue inset;
+	font-weight:bold;
+	cursor:pointer;
+}
+
+.vermas:hover{
+	color:#05034a;
+}
+
+.vermas a{
+	color:darkSlateBlue;
+	text-decoration:none;
+}
+
+.mostrarmas{
+    display:block;
+    border: solid 1px black;
+    width: 92%;
+    margin: auto;
+    height:15px;
+    background: darkSlateBlue;
+    margin-top:5px;
+    padding:10px;
+    text-align:center;
+    color: white;.;
+    font-weight: bold;
+    font-family: Verdana;
+    font-size: 12px;
+    box-shadow: 1px 1px 4px 0px black;
+    cursor:pointer;
+}
+
+.oculto{
+	display: none;
+}
+
+
+.noticias .mostrarmas{
+	background-color: #438B3D;
+}
+
+.noticias .vermas a{
+	color:#438B3D;
+}
+
+.noticias .vermas{
+	color:#438B3D;
+	border-color: #438B3D;
+	box-shadow-color: #438B3D;
+}
+
+.noticias .titular{
+	background-color: #438B3D;
+}
+
+.noticias .comentarios span{
+	background-color: #438B3D;
+}
+
+.noticias .content {
+	background-color: #438B3D;
+}
+
+.weblogs .mostrarmas{
+	background-color: #3D8B85;
+}
+
+.weblogs .vermas a{
+	color:#3D8B85;
+}
+
+.weblogs .vermas{
+	color:#3D8B85;
+	border-color: #3D8B85;
+	box-shadow-color: #3D8B85;
+}
+
+.weblogs .titular{
+	background-color: #3D8B85;
+}
+
+.weblogs .comentarios span{
+	background-color: #3D8B85;
+}
+
+.weblogs .content {
+	background-color: #3D8B85;
+}
+
+.peliculas .mostrarmas{
+	background-color: #8B3D43;
+}
+
+.peliculas .vermas a{
+	color:#8B3D43;
+}
+
+.peliculas .vermas{
+	color:#8B3D43;
+	border-color: #8B3D43;
+	box-shadow-color: #8B3D43;
+}
+
+.peliculas .titular{
+	background-color: #8B3D43;
+}
+
+.peliculas .comentarios span{
+	background-color: #8B3D43;
+}
+
+.peliculas .content {
+	background-color: #8B3D43;
+}
+
+
+.comics .mostrarmas{
+	background-color: #8B6C3D;
+}
+
+.comics .vermas a{
+	color:#8B6C3D;
+}
+
+.comics .vermas{
+	color:#8B6C3D;
+	border-color: #8B6C3D;
+	box-shadow-color: #8B6C3D;
+}
+
+.comics .titular{
+	background-color: #8B6C3D;
+}
+
+.comics .comentarios span{
+	background-color: #8B6C3D;
+}
+
+.comics .content {
+	background-color: #8B6C3D;
+}
+
+.promociones .mostrarmas{
+	background-color: #888B3D;
+}
+
+.promociones .vermas a{
+	color:#888B3D;
+}
+
+.promociones .vermas{
+	color:#888B3D;
+	border-color: #888B3D;
+	box-shadow-color: #888B3D;
+}
+
+.promociones .titular{
+	background-color: #888B3D;
+}
+
+.promociones .comentarios span{
+	background-color: #888B3D;
+}
+
+.promociones .content {
+	background-color: #888B3D;
+}
