@@ -11,9 +11,11 @@
 
 </head>
 <body id="dream1">
+<div class="titulares" data-indice="popular">Popular</div>
+<div class="titulares" data-indice="debuts">Debuts</div>
+<div class="titulares" data-indice="">Everyone</div>
 
 <div class="contiene">
-
 
 <div id="contenido">
   <div id="container" style="float:left; width:100%">
@@ -26,6 +28,7 @@
 <script src="js/libs/jquery-1.7.2.min.js"></script>
 <script src="js/libs/underscore-min.js"></script>
 <script src="js/libs/backbone-min.js"></script>
+<script src="js/libs/dribbble.js"></script>
 <script src="js/main.js"></script>
 <script src="js/util.js"></script>
 
@@ -41,7 +44,7 @@
 <script type="text/template" id="entrada-template">
   <div class="container" data-enlace="{{obj.url}}" data-link="{{ obj.url }}/?ajax=1">
     <div class="content"><span>{{ obj.title }}</span></div>
-    <div class="background" style="background-image: url({{ obj.shots.image_teaser_url }})"></div>
+    <div class="background" style="background-image: url({{ obj.image_teaser_url }})"></div>
     <div class="comentarios"><span>[[ if (typeof obj.comments_count !== 'undefined' && obj.comments_count !== null) { ]] {{ obj.comments_count }} comments [[}]]</span>
       <div class="vermas" >See More</div>
     </div>

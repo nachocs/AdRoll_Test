@@ -14,7 +14,22 @@ img {
 .contenido{
 	background-color:#05034a;
 }
+#contenido{
+	width: 600px;
+}
 
+.titulares{
+
+border: 1px solid black;
+width: 164px;
+display: inline-block;
+margin: 5px;
+padding: 5px 10px;
+clear: none;
+font-family: Verdana, Arial;
+background-color: #CDD349;
+font-size: 1em;
+}
 .container {
 	width: 100%;
 	max-width: 178px;

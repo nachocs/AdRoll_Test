@@ -27,6 +27,7 @@ $(function () {
 	};
 	$D.provide($D, 'App');
 	$D.path = "";
+	$D.empieza = 0;
 
 	_.templateSettings = {
 		interpolate : /\{\{(.+?)\}\}/g,
@@ -45,27 +46,25 @@ $(function () {
 			return $D.path + "http://api.dribbble.com/shots/" + this.attributes.entrada;
 		},
 		defaults: {
-			"subject": "",
-			"encabezamiento": "",
-			"nombreindice": ""
+			"title": "",
+			"image_teaser_url": ""
 		}
 	});
 
 	Collection = Backbone.Collection.extend({
 		model: Model,
-/*		initialize: function(models, options) {
-			if (options.indice){
-				this.indice = options.indice;
+		sync: function(method, model, options, error){
+			if (options.data){this.indice = options.data.indice;}
+			if (!this.indice){this.indice = "everyone"}
+				console.log("$D.empieza", $D.empieza)
+			Dribbble.list( this.indice, function( resp ){
+			if (resp) {
+				console.log(resp)
+				console.log(resp.shots)
+				$D.empieza++;
+   				options.success(resp.shots);
 			}
-		}, */
-		url: function () { 
-			if (this.indice) {
-				return $D.path + "http://api.dribbble.com/shots/" + this.indice;
-			} else if (this.empieza) {
-				return $D.path + "http://api.dribbble.com/shots/everyone?page=" + this.empieza;
-			} else {
-				return $D.path + "http://api.dribbble.com/shots/everyone" + "?callback=dishAndSwish";
-			}
+			}, 9, $D.empieza);
 		}
 	});
 
@@ -132,7 +131,6 @@ $(function () {
 					model: item,
 					collection: collection
 				});
-				self.empieza = item.id;
 //				$(this.el).append(view.render().el);
 				$contenido.append(view.render().el);
 			});
@@ -166,7 +164,6 @@ $(function () {
 			  indice = self.indice || "";
 			childLibrary.fetch({ 
 				data: {
-					empieza: self.empieza,
 					indice: indice
 				},
 				beforeSend: function () {
@@ -187,6 +184,7 @@ $(function () {
 			ev.preventDefault();
 			var indice = $(ev.currentTarget).data('indice');
 			this.indice = indice;
+			console.log("indice", this.indice)
 
 			var ancho = $('#contenido').width();
 			$('#container').css({'overflow-y': '', 'overflow-x': ''});
@@ -194,6 +192,7 @@ $(function () {
 			$('#container').height($('#contenido').height());
 			$('#resultado').hide();
 
+			$D.empieza = 0;
 			this.collection.fetch({ data: {indice: indice } });
 			
 		},
@@ -261,12 +260,9 @@ $(function () {
 
 	$(function () {
 		window.$D.App = new DHome();
-console.log("test")
-$.getJSON("http://api.dribbble.com/shots/everyone", function(data) {
-	console.log("response", data);
-    });
 
-//		Backbone.history.start();
+
+		Backbone.history.start();
 		$('[data-indice]').click(function (ev) {
 			$D.App.libraryView.muestraIndice(ev);
 		});
