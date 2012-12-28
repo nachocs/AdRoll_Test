@@ -56,11 +56,8 @@ $(function () {
 		sync: function(method, model, options, error){
 			if (options.data){this.indice = options.data.indice;}
 			if (!this.indice){this.indice = "everyone"}
-				console.log("$D.empieza", $D.empieza)
 			Dribbble.list( this.indice, function( resp ){
 			if (resp) {
-				console.log(resp)
-				console.log(resp.shots)
 				$D.empieza++;
    				options.success(resp.shots);
 			}
@@ -183,7 +180,6 @@ $(function () {
 			ev.preventDefault();
 			var indice = $(ev.currentTarget).data('indice');
 			this.indice = indice;
-			console.log("indice", this.indice)
 
 			$('.titulares').removeClass('on');
 			$(ev.currentTarget).addClass('on')
