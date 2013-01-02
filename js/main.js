@@ -1,16 +1,6 @@
 $(function () {
 	$D = window.$D || {};
-  /*\
-   * $D.provide
-   [ method ]
-   * Creates a namespace in the global
-   * $D namespace.
-   > Arguments
-   - ns (object) Object in which to create this namespace
-   - ns_string (string) Name for this namespace
-   > Usage
-   | $D.provide($D, 'app')
-  \*/
+
 	$D.provide = function (ns, ns_string) {
 		var parts = ns_string.split('.'), parent = ns, pl, i;
 		if (parts[0] === "$B") {
@@ -27,7 +17,7 @@ $(function () {
 	};
 	$D.provide($D, 'App');
 	$D.path = "";
-	$D.empieza = 0;
+	$D.page = 1;
 
 	_.templateSettings = {
 		interpolate : /\{\{(.+?)\}\}/g,
@@ -42,9 +32,6 @@ $(function () {
 	  DHome;
 
 	Model = Backbone.Model.extend({
-		url: function () { 
-			return $D.path + "http://api.dribbble.com/shots/" + this.attributes.entrada;
-		},
 		defaults: {
 			"title": "",
 			"image_teaser_url": ""
@@ -54,14 +41,14 @@ $(function () {
 	Collection = Backbone.Collection.extend({
 		model: Model,
 		sync: function(method, model, options, error){
-			if (options.data){this.indice = options.data.indice;}
-			if (!this.indice){this.indice = "everyone"}
-			Dribbble.list( this.indice, function( resp ){
+			if (options.data){this.section = options.data.section;}
+			if (!this.section){this.section = "everyone"}
+			Dribbble.list( this.section, function( resp ){
 			if (resp) {
-				$D.empieza++;
+				$D.page++;
    				options.success(resp.shots);
 			}
-			}, 9, $D.empieza);
+			}, 9, $D.page);
 		}
 	});
 
@@ -77,7 +64,6 @@ $(function () {
 		render: function () {
 		//	this.model.fetch();
 			var renderedContent = this.template(this.model.toJSON());
-//			$('.albums').append(renderedContent);
 			$(this.el).html(renderedContent);
 
 			if (this.afterRender && typeof this.afterRender === 'function') {
@@ -90,11 +76,6 @@ $(function () {
 			this.model.fetch();
 		},
 		afterRender: function () {
-			var self = this;
-			$('[data-fondo-imagen]').each(function () {
-				var imagen = $(this).data('fondo-imagen');
-				$(this).css('background-image', 'url(\'' +  imagen + '\')');
-			});
 			$('.mostrarmas').removeClass('oculto');
 
 		}
@@ -137,36 +118,29 @@ $(function () {
 			return this;
 		},
 		events: {
-			'mouseenter .container': 'mostrarComentariosEv',
-			'mouseleave .container': 'ocultarComentariosEv',
-			'click .container': 'saltar',
-			'click #mostrarmas': 'mostrarMas'
+			'mouseenter .container': 'showComments',
+			'mouseleave .container': 'hideComments',
+			'click .container': 'jump',
+			'click #mostrarmas': 'loadMore'
 		},
 		detect_scroll: function () {
-			var triggerPoint = 100; // 100px from the bottom
 			if (!this.isLoading && (($(window).scrollTop() + $(window).height()) > (this.el.scrollHeight * 0.8))) {
-				this.anadir();
+				this.addEntries();
 			}
 		},
-		mostrarMas: function (ev) {
+		loadMore: function (ev) {
 			ev.stopPropagation();
 			ev.preventDefault();
-			this.anadir();
+			this.addEntries();
 		},
-		anadir: function () {
+		addEntries: function () {
 			this.isLoading = true;
 			var self = this,
-			  childLibrary = new Collection(),
-			  indice = self.indice || "";
+				childLibrary = new Collection(),
+				section = self.section || "";
 			childLibrary.fetch({ 
 				data: {
-					indice: indice
-				},
-				beforeSend: function () {
-					$('.mostrarmas').html('<img src="' + $D.path + 'img/ico-modal-cargando.gif" style="height:18px">');
-				},
-				complete: function () {
-					$('.mostrarmas').html('mostrar mas');
+					section: section
 				},
 				success: function () {
 					self.collection.add(childLibrary.toJSON());
@@ -175,56 +149,36 @@ $(function () {
 				}
 			});
 		},
-		muestraIndice: function (ev) {
+		showSection: function (ev) {
 			ev.stopPropagation();
 			ev.preventDefault();
-			var indice = $(ev.currentTarget).data('indice');
-			this.indice = indice;
+			var section = $(ev.currentTarget).data('section');
+			this.section = section;
 
 			$('.titulares').removeClass('on');
 			$(ev.currentTarget).addClass('on')
 
-			$D.empieza = 0;
-			this.collection.fetch({ data: {indice: indice } });
-			
+			$D.page = 1;
+			this.collection.fetch({ data: {section: section } });
 		},
-		saltar: function (ev) {
-			var enlace = $(ev.currentTarget).data('enlace');
-			if (enlace) {
-				window.open(enlace, '_blank');
-//				window.location = enlace;
-			} else {
-				this.saltointerior($(ev.currentTarget));
+		jump: function (ev) {
+			var hardlink = $(ev.currentTarget).data('hardlink');
+			if (hardlink) {
+				window.open(hardlink, '_blank');
+//				window.location = hardlink;
 			}
 		},
-		saltointerior: function ($objeto) {
-			var enlace = $objeto.data('link');
-
-			var alto = $('#container').height();
-			var ancho = $('#contenido').width();
-			$('#container').css({'overflow-y': 'scroll', 'overflow-x': 'hidden'});
-			$('#container').width('215px');
-			$('#container').find('.destacado').each(function () {
-				$(this).removeClass('destacado');
-			});
-			$('#resultado').show().width(ancho - 215-20).css({'float': 'right', 'padding': '10px'});
-			$('#resultado').load(enlace, function () {
-				setTimeout(function () {
-					$('#container').height($('#resultado').height());
-				}, 0);
-			});
+		showComments: function (ev) {
+			var $objet = $(ev.currentTarget);
+			var ancho = $objet.width();
+			$objet.find('.comentarios').show().css({left: ancho});
+			$objet.find('.comentarios').animate({left: '0px'}, 300);
 		},
-		mostrarComentariosEv: function (ev) {
-			var $objeto = $(ev.currentTarget);
-			var ancho = $objeto.width();
-			$objeto.find('.comentarios').show().css({left: ancho});
-			$objeto.find('.comentarios').animate({left: '0px'}, 300);
-		},
-		ocultarComentariosEv: function (ev) {
-			var $objeto = $(ev.currentTarget);
-			var ancho = $objeto.width();
-			$objeto.find('.comentarios').animate({left: ancho}, 300, function () {
-				$objeto.find('.comentarios').hide();
+		hideComments: function (ev) {
+			var $objet = $(ev.currentTarget);
+			var ancho = $objet.width();
+			$objet.find('.comentarios').animate({left: ancho}, 300, function () {
+				$objet.find('.comentarios').hide();
 			});
 		}
 	});
@@ -253,14 +207,10 @@ $(function () {
 	$(function () {
 		window.$D.App = new DHome();
 
-
 		Backbone.history.start();
-		$('[data-indice]').click(function (ev) {
-			$D.App.libraryView.muestraIndice(ev);
+		$('[data-section]').click(function (ev) {
+			$D.App.libraryView.showSection(ev);
 		});
-		//		$(window).scroll(function () { 
-//			console.log("scroll"); 
-//		});
 	});
 
 

@@ -5,16 +5,16 @@
   <meta http-equiv="expires" content="0" >
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="Author" content="Pedro Ignacio Carmona Sarmiento" />
-  <title>TEST.</title>
+  <title>TEST</title>
 
   <link rel="stylesheet" type="text/css" href="css/main.css" />
 
 </head>
-<body id="dream1">
+<body>
   <div class="titularesbox">
-<div class="titulares" data-indice="popular">Popular</div>
-<div class="titulares" data-indice="debuts">Debuts</div>
-<div class="titulares" data-indice="">Everyone</div>
+<div class="titulares" data-section="popular">Popular</div>
+<div class="titulares" data-section="debuts">Debuts</div>
+<div class="titulares" data-section="">Everyone</div>
 </div>
 <div class="contiene">
 
@@ -31,7 +31,6 @@
 <script src="js/libs/backbone-min.js"></script>
 <script src="js/libs/dribbble.js"></script>
 <script src="js/main.js"></script>
-<script src="js/util.js"></script>
 
 
 <script type="text/template" id="library-template">
@@ -43,7 +42,7 @@
 
 
 <script type="text/template" id="entrada-template">
-  <div class="container" data-enlace="{{obj.url}}" data-link="{{ obj.url }}/?ajax=1">
+  <div class="container" data-hardlink="{{obj.url}}" data-link="{{ obj.url }}/?ajax=1">
     <div class="content"><span>{{ obj.title }}</span></div>
     <div class="background" style="background-image: url({{ obj.image_teaser_url }})"></div>
     <div class="comentarios"><span>[[ if (typeof obj.comments_count !== 'undefined' && obj.comments_count !== null) { ]] {{ obj.comments_count }} comments [[}]]</span>
